@@ -16,7 +16,7 @@ indentPrint(object, indent=4, ...)
 \value{
 \code{object} is returned invisibly
 }
-\author{David Firth, \email{david.firth@nuffield.ox.ac.uk}}
+\author{David Firth, \email{d.firth@warwick.ac.uk}}
 \examples{
 indentPrint("this indented by 10 spaces", indent=10)
 }

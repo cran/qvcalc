@@ -18,9 +18,10 @@ worstErrors(qv.object)
   error and the worst positive relative error.
 }
 \references{
-Firth, D. and Mezezes, R. X. de (2002)  Quasi variances.  Submitted
-  for publication.  At \url{http://www.stats.ox.ac.uk/~firth/papers/}.
-
+Firth, D. and Mezezes, R. X. de (2002)  Quasi variances.  
+  \emph{Biometrika}, to appear.  
+  At \url{http://www.stats.ox.ac.uk/~firth/papers/}.
+  
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
   London: Chapman and Hall.
 
@@ -28,7 +29,7 @@ Menezes, R. X. (1999)  More useful standard errors for group and factor
   effects in generalized linear models.  \emph{D.Phil. Thesis},
   Department of Statistics, University of Oxford.
 }
-\author{David Firth, \email{david.firth@nuffield.ox.ac.uk}}
+\author{David Firth, \email{d.firth@warwick.ac.uk}}
 \seealso{\code{\link{qvcalc}}}
 
 \examples{
