@@ -142,14 +142,14 @@ worstErrors <- function(qv.object)
     sqrt(c(min(evalues),max(evalues)))-1
 }
 
-indentPrint <- function(object, indent=4, ...){
-    sink(textConnection("zz","w"))
-    print(object,...)
+indentPrint <- function(object, indent = 4, ...){
+    tc <- textConnection("zz", "w", local = TRUE)
+    sink(tc)
+    try(print(object, ...))
     sink()
-    indent <- paste(rep(" ",indent),sep="",collapse="")
-    cat(paste(indent,zz,sep=""),sep="\n")
-    invisible(object)
-}
+    close(tc)
+    indent <- paste(rep(" ", indent), sep = "", collapse = "")
+    cat(paste(indent, zz, sep = ""), sep = "\n")}
 
 summary.qv <- function(object, ...)
 {
