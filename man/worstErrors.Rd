@@ -3,7 +3,7 @@
 \title{Accuracy of a Quasi-variance Approximation}
 \description{
   Computes the worst relative error, among all contrasts,
-  for the standard error as derived from a set of quasi-variances.
+  for the standard error as derived from a set of quasi variances.
   For details of the method see Menezes (1999) or Firth and
   Menezes (2002).
 }
@@ -18,7 +18,7 @@ worstErrors(qv.object)
   error and the worst positive relative error.
 }
 \references{
-Firth, D. and Mezezes, R. X. de (2002)  Quasi-variances.  Submitted
+Firth, D. and Mezezes, R. X. de (2002)  Quasi variances.  Submitted
   for publication.  At \url{http://www.stats.ox.ac.uk/~firth/papers/}.
 
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.

@@ -178,6 +178,11 @@ plot.qv <- function(x, width=2, ylab = "estimate",
     frame <- x$qvframe
     if (is.na(frame$estimate[1]))
         stop("x has no parameter estimates to plot")
+    if (any(is.nan(frame$quasiSE)))
+        stop(paste(" No comparison intervals available,\n",
+                   "since one of the quasi variances is negative.",
+                   "  See ?qvcalc for more.",
+                   sep=""))
     levels <- factor(row.names(frame), levels=row.names(frame))
     xvalues <- seq(along=levels)
     est <- frame$estimate
