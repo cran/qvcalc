@@ -8,7 +8,7 @@
   quasi standard errors)
 for estimated model coefficients relating to the levels of a categorical
 (i.e., factor) explanatory variable.  For details of the method see
-Firth (2000) or Firth and Menezes (2002).
+Firth (2000) or Firth and Menezes (2004).
 }
 \usage{
 qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
@@ -67,9 +67,8 @@ Firth, D. (2000)  Quasi-variances in Xlisp-Stat and on the web.
   \emph{Journal of Statistical Software} \bold{5.4}, 1--13.  
   At \url{http://www.jstatsoft.org}
 
-Firth, D. and Mezezes, R. X. de (2002)  Quasi variances.  
-  \emph{Biometrika}, to appear.  
-  At \url{http://www.stats.ox.ac.uk/~firth/papers/}.
+Firth, D. and Mezezes, R. X. de (2004)  Quasi-variances.  
+  \emph{Biometrika} \bold{91}, 65--80.  
 
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
   London: Chapman and Hall.

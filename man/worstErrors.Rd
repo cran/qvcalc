@@ -5,7 +5,7 @@
   Computes the worst relative error, among all contrasts,
   for the standard error as derived from a set of quasi variances.
   For details of the method see Menezes (1999) or Firth and
-  Menezes (2002).
+  Menezes (2004).
 }
 \usage{
 worstErrors(qv.object)
@@ -18,9 +18,8 @@ worstErrors(qv.object)
   error and the worst positive relative error.
 }
 \references{
-Firth, D. and Mezezes, R. X. de (2002)  Quasi variances.  
-  \emph{Biometrika}, to appear.  
-  At \url{http://www.stats.ox.ac.uk/~firth/papers/}.
+Firth, D. and Mezezes, R. X. de (2004)  Quasi-variances.  
+  \emph{Biometrika} \bold{91}, 69--80.  
   
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
   London: Chapman and Hall.
