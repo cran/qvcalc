@@ -8,7 +8,10 @@
   quasi standard errors)
 for estimated model coefficients relating to the levels of a categorical
 (i.e., factor) explanatory variable.  For details of the method see
-Firth (2000) or Firth and Menezes (2004).
+Firth (2000), Firth (2003) or Firth and Menezes (2004).  Quasi variances 
+generalize
+and improve the accuracy of \dQuote{floating absolute risk} 
+(Easton et al., 1991). 
 }
 \usage{
 qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
@@ -63,9 +66,18 @@ A list of class \code{qv}, with components
   otherwise \code{NULL}}
 }
 \references{
+Easton, D. F, Peto, J. and Babiker, A. G. A. G. (1991)  
+Floating absolute risk: an alternative to relative risk in survival 
+and case-control analysis avoiding an arbitrary reference group.  
+\emph{Statistics in Medicine} \bold{10}, 1025--1035.
+
 Firth, D. (2000)  Quasi-variances in Xlisp-Stat and on the web.  
   \emph{Journal of Statistical Software} \bold{5.4}, 1--13.  
   At \url{http://www.jstatsoft.org}
+
+Firth, D. (2003) Overcoming the reference category problem in the 
+presentation of statistical models. \emph{Sociological Methodology} 
+\bold{33}, 1--18.
 
 Firth, D. and Mezezes, R. X. de (2004)  Quasi-variances.  
   \emph{Biometrika} \bold{91}, 65--80.  

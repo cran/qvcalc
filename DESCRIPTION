@@ -1,5 +1,5 @@
 Package: qvcalc
-Version: 0.7-4
+Version: 0.7-6
 Title: Quasi variances for factor effects in statistical models
 Author: David Firth
 Maintainer: David Firth <d.firth@warwick.ac.uk>
@@ -7,4 +7,4 @@ URL: http://www.warwick.ac.uk/go/qvcalc, http://www.warwick.ac.uk/go/dfirth
 Description: Functions to compute quasi variances and associated measures of approximation error
 Depends: R
 License: GPL (version 2 or later)
-Packaged: Wed Oct 13 11:54:54 2004; david
+Packaged: Tue Jan 18 17:42:50 2005; david
