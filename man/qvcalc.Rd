@@ -10,7 +10,7 @@ for estimated model coefficients relating to the levels of a categorical
 Firth (2000) or Firth and Menezes (2002).
 }
 \usage{
-qvcalc(object, factorname=NULL, dispersion = NULL,
+qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
       estimates=NULL,  modelcall=NULL)
 }
 \arguments{
@@ -18,6 +18,8 @@ qvcalc(object, factorname=NULL, dispersion = NULL,
   for the estimates of interest}
 \item{factorname}{If \code{object} is a model, the name of the factor of
   interest}
+\item{labels}{An optional vector of row names for the \code{qvframe}
+  component of the result (redundant if \code{object} is a model)}
 \item{dispersion}{an optional scalar multiplier for the covariance
   matrix, to cope with overdispersion for example}
 \item{estimates}{an optional vector of estimated coefficients (redundant

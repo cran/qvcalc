@@ -1,4 +1,5 @@
-qvcalc <- function(object, factorname=NULL, dispersion=NULL,
+qvcalc <- function(object, factorname=NULL, labels=NULL,
+                   dispersion=NULL,
                    estimates=NULL, modelcall=NULL)
 {
   if (version$major == 1 && version$minor < 6.0) {
@@ -26,13 +27,14 @@ qvcalc <- function(object, factorname=NULL, dispersion=NULL,
       covmat <- covmat[coef.indices, coef.indices, drop=FALSE]
       covmat <- contmat %*% covmat %*% t(contmat)
       return(qvcalc(covmat,
-                    factorname = factorname,
+                    factorname = factorname, labels=labels,
                     dispersion = dispersion,
                     estimates = estimates,
                     modelcall = model$call)
             )}
   else {  ##  the basic QV calculation, on a covariance matrix
       covmat <- object
+      if (!is.null(labels)) rownames(covmat) <- colnames(covmat) <- labels
       n <- dim(covmat)[1]
       if (n <= 2) stop(
            "qvcalc works only for factors with 3 or more levels")
@@ -97,7 +99,7 @@ qvcalc <- function(object, factorname=NULL, dispersion=NULL,
       model <- glm(response ~ 0 + level, family=expLinear)
       qv <- coef(model)
       NAs <- rep(NA,length(qv))
-      if (!is.null(rownames(covmat))) names(qv)<-rownames(covmat)  
+      if (!is.null(rownames(covmat))) names(qv) <- rownames(covmat)  
       frame <- data.frame(estimate = NAs,
                           SE = sqrt(diag(covmat)),
                           quasiSE = sqrt(qv),
