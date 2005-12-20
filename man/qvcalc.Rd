@@ -2,6 +2,7 @@
 \alias{qvcalc}
 \alias{summary.qv}
 \alias{plot.qv}
+\alias{print.qv}
 \title{Quasi Variances for Model Coefficients}
 \description{
   Computes a set of quasi variances (and corresponding
