@@ -1,7 +1,6 @@
 \name{qvcalc}
 \alias{qvcalc}
 \alias{summary.qv}
-\alias{plot.qv}
 \alias{print.qv}
 \title{Quasi Variances for Model Coefficients}
 \description{
@@ -92,7 +91,7 @@ Menezes, R. X. (1999)  More useful standard errors for group and factor
 }
 \author{David Firth, \email{d.firth@warwick.ac.uk}}
 
-\seealso{\code{\link{worstErrors}}}
+\seealso{\code{\link{worstErrors}}, \code{\link{plot.qv}}}
 \examples{
 ##  Overdispersed Poisson loglinear model for ship damage data
 ##  from McCullagh and Nelder (1989), Sec 6.3.2 

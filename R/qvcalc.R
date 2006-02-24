@@ -180,10 +180,17 @@ summary.qv <- function(object, ...)
     }
 }
 
-plot.qv <- function(x, width = 2, ylab = "estimate",
+plot.qv <- function(x, intervalWidth = 2, ylab = "estimate",
                     main = "Intervals based on quasi standard errors",
+                    levelNames = NULL,
                     ...) {
     frame <- x$qvframe
+    if (!is.null(levelNames)) {
+        if (nrow(frame) != length(levelNames)) stop(
+                "levelNames is not a vector of the right length"
+                )
+        row.names(frame) <- levelNames
+    }
     if (is.null(frame$quasiSE))
         stop("Cannot plot, because there are no quasi standard errors")
     if (is.na(frame$estimate[1]))
@@ -197,8 +204,8 @@ plot.qv <- function(x, width = 2, ylab = "estimate",
     xvalues <- seq(along = levels)
     est <- frame$estimate
     se <- frame$quasiSE
-    tops <- est + width*se
-    tails <- est - width*se
+    tops <- est + (intervalWidth * se)
+    tails <- est - (intervalWidth * se)
     range <- max(tops) - min(tails)
     ylim <- c(min(tails) - range/10, max(tops) + range/10)
     plot(levels, frame$estimate, border = "transparent", ylim = ylim,
@@ -206,4 +213,5 @@ plot.qv <- function(x, width = 2, ylab = "estimate",
          main = main, ...)
     points(frame$estimate, ...)
     segments(xvalues, tails, xvalues, tops)
+    invisible(x)
 }
