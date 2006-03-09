@@ -2,10 +2,6 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
                    dispersion = NULL,
                    estimates = NULL, modelcall = NULL)
 {
-  if (version$major == 1 && version$minor < 6.0) {
-      require(MASS, quietly = TRUE)
-      ## for generic function vcov() and related methods
-  }
   if (!is.matrix(object)) {  ## i.e., object is a model
       if (is.null(factorname)) stop("argument \"factorname\" missing")
       model <- object

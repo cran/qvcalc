@@ -1,0 +1,5 @@
+export(qvcalc, worstErrors, indentPrint)
+
+S3method(print, qv)
+S3method(summary, qv)
+S3method(plot, qv)
