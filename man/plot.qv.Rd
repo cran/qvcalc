@@ -6,7 +6,7 @@
   quasi standard errors.
 }
 \usage{
-plot.qv(x, intervalWidth = 2, ylab = "estimate", main = "Intervals based on quasi standard errors", levelNames = NULL, ...)
+plot.qv(x, intervalWidth = 2, ylab = "estimate", xlab = x$factorname, ylim = NULL, main = "Intervals based on quasi standard errors", levelNames = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -14,15 +14,18 @@ plot.qv(x, intervalWidth = 2, ylab = "estimate", main = "Intervals based on quas
   calling \code{\link{qvcalc}}}
   \item{intervalWidth}{ the half-width, in quasi standard errors, of the
   plotted intervals}
-  \item{ylab}{ a label fo the y axis }
-  \item{main}{ a title for the plot }
+  \item{ylab}{ as for \code{\link{plot.default}}}
+  \item{xlab}{ as for \code{\link{plot.default}}}
+  \item{ylim}{ as for \code{\link{plot.default}}}
+  \item{main}{ as for \code{\link{plot.default}}}
   \item{levelNames}{ labels to be used on the x axis for the levels of
   the factor whose effect is plotted }
   \item{\dots}{ other arguments understood by \code{plot} }
 }
 \details{
   If \code{levelNames} is unspecified, the row names of \code{x$qvframe}
-  are used.
+  will be used.
+
 }
 \value{
   \code{invisible(x)}

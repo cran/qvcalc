@@ -176,7 +176,11 @@ summary.qv <- function(object, ...)
     }
 }
 
-plot.qv <- function(x, intervalWidth = 2, ylab = "estimate",
+plot.qv <- function(x,
+                    intervalWidth = 2,
+                    ylab = "estimate",
+                    xlab = x$factorname,
+                    ylim = NULL,
                     main = "Intervals based on quasi standard errors",
                     levelNames = NULL,
                     ...) {
@@ -203,11 +207,13 @@ plot.qv <- function(x, intervalWidth = 2, ylab = "estimate",
     tops <- est + (intervalWidth * se)
     tails <- est - (intervalWidth * se)
     range <- max(tops) - min(tails)
-    ylim <- c(min(tails) - range/10, max(tops) + range/10)
+    if (is.null(ylim)) ylim <- c(min(tails) - range/10, max(tops) + range/10)
+    if (is.null(xlab)) xlab <- "factor level"
     plot(levels, frame$estimate, border = "transparent", ylim = ylim,
-         xlab = x$factorname, ylab = ylab,
+         xlab = xlab, ylab = ylab,
          main = main, ...)
     points(frame$estimate, ...)
     segments(xvalues, tails, xvalues, tops)
     invisible(x)
 }
+
