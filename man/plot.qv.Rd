@@ -6,9 +6,8 @@
   quasi standard errors.
 }
 \usage{
-plot.qv(x, intervalWidth = 2, ylab = "estimate", xlab = x$factorname, ylim = NULL, main = "Intervals based on quasi standard errors", levelNames = NULL, ...)
+\method{plot}{qv}(x, intervalWidth = 2, ylab = "estimate", xlab = x$factorname, ylim = NULL, main = "Intervals based on quasi standard errors", levelNames = NULL, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ an object of class \code{"qv"}, typically the result of
   calling \code{\link{qvcalc}}}

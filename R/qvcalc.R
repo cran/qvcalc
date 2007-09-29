@@ -3,8 +3,26 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
                    estimates = NULL, modelcall = NULL)
 {
   if (!is.matrix(object)) {  ## i.e., object is a model
-      if (is.null(factorname)) stop("argument \"factorname\" missing")
       model <- object
+      ## special case of an unstructured Bradley-Terry model
+      if (inherits(model, "BTm") && deparse(model$call$formula[[3]]) == "..") {
+          if (is.null(labels)) labels <- model$xlevels[[1]]
+          if (is.null(factorname)) factorname <- ""
+          ability.indices <- grep("\\.\\.", names(coef(model)))
+          if (is.null(estimates)) estimates <-
+              c(0, coef(model)[ability.indices])
+          v <- vcov(model)[ability.indices, ability.indices]
+          v <- rbind(0, cbind(0, v))
+          rownames(v) <- colnames(v) <- labels
+          return(qvcalc(v,
+                        factorname = factorname,
+                        labels = labels,
+                        dispersion = dispersion,
+                        estimates = estimates,
+                        modelcall = model$call))
+      }
+      ## more standard lm, glm, etc. objects
+      if (is.null(factorname)) stop("argument \"factorname\" is NULL")
       term.index <- which(attr(terms(model),"term.labels") ==
                                                          factorname)
       modelmat <- if (is.matrix(model$x)) model$x
@@ -74,9 +92,12 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
               levelnames <- rownames(covmat)
           else levelnames <- 1:n
           sapply(simple.contrasts(n, levelnames),
-	          function(contrast){contrast.variance(contrast,covmat)})
+	          function(contrast){contrast.variance(contrast, covmat)})
       }
-      response <- log(simple.contrast.variances(n,covmat))
+      response <- simple.contrast.variances(n,covmat)
+      if (any(response <= 0)) {
+          stop("not all contrasts have positive variance")
+      } else response <- log(response)
       expLinear <- structure(list(
         	           family = "expLinear",
         	           link = "exp",
@@ -141,6 +162,7 @@ worstErrors <- function(qv.object)
 }
 
 indentPrint <- function(object, indent = 4, ...){
+    zz <- ""
     tc <- textConnection("zz", "w", local = TRUE)
     sink(tc)
     try(print(object, ...))
@@ -200,8 +222,8 @@ plot.qv <- function(x,
                    "since one of the quasi variances is negative.",
                    "  See ?qvcalc for more.",
                    sep = ""))
-    levels <- factor(row.names(frame), levels = row.names(frame))
-    xvalues <- seq(along = levels)
+    faclevels <- factor(row.names(frame), levels = row.names(frame))
+    xvalues <- seq(along = faclevels)
     est <- frame$estimate
     se <- frame$quasiSE
     tops <- est + (intervalWidth * se)
@@ -209,7 +231,7 @@ plot.qv <- function(x,
     range <- max(tops) - min(tails)
     if (is.null(ylim)) ylim <- c(min(tails) - range/10, max(tops) + range/10)
     if (is.null(xlab)) xlab <- "factor level"
-    plot(levels, frame$estimate, border = "transparent", ylim = ylim,
+    plot(faclevels, frame$estimate, border = "transparent", ylim = ylim,
          xlab = xlab, ylab = ylab,
          main = main, ...)
     points(frame$estimate, ...)
