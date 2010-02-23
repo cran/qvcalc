@@ -32,13 +32,6 @@ qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
   (redundant if \code{object} is a model)}
 }
 \details{
-  If \code{object} is a Bradley-Terry model of class
-  \code{\link[BradleyTerry]{BTm}}, of the standard,
-  unstructured kind that is specified using
-  the special \code{BTm} formula \code{~ ..}, the \code{factorname}
-  argument can be omitted, in which case the \code{factorname}
-  component of the resulting \code{qv} object will be \code{""}.  
-  
   Ordinarily the quasi variances are positive and so their square roots
   (the quasi standard errors) exist and can be used in plots, etc.
 
@@ -112,16 +105,6 @@ shipmodel <- glm(formula = incidents ~ type + year + period,
 shiptype.qvs <- qvcalc(shipmodel, "type")
 summary(shiptype.qvs, digits=4)
 plot(shiptype.qvs)
-##  A Bradley-Terry model example
-##  For details and references see help(BTm)
-library(BradleyTerry)
-##
-##  Baseball data from Agresti (2002) p438
-data(baseball)
-##  Fit the Bradley-Terry model with home advantage effect
-baseballModel <- BTm(baseball ~ .., order.effect = baseball$home.adv)
-baseball.qv <- qvcalc(baseballModel, factorname = "team")
-plot(baseball.qv, main = "Bradley-Terry analysis of baseball data")
 \dontrun{
 ##  Example of a negative quasi variance
 ##  Requires the "car" package

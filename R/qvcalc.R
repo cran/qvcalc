@@ -2,25 +2,9 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
                    dispersion = NULL,
                    estimates = NULL, modelcall = NULL)
 {
-  if (!is.matrix(object)) {  ## i.e., object is a model
+  if (!is.matrix(object)) {
       model <- object
       ## special case of an unstructured Bradley-Terry model
-      if (inherits(model, "BTm") && deparse(model$call$formula[[3]]) == "..") {
-          if (is.null(labels)) labels <- model$xlevels[[1]]
-          if (is.null(factorname)) factorname <- ""
-          ability.indices <- grep("\\.\\.", names(coef(model)))
-          if (is.null(estimates)) estimates <-
-              c(0, coef(model)[ability.indices])
-          v <- vcov(model)[ability.indices, ability.indices]
-          v <- rbind(0, cbind(0, v))
-          rownames(v) <- colnames(v) <- labels
-          return(qvcalc(v,
-                        factorname = factorname,
-                        labels = labels,
-                        dispersion = dispersion,
-                        estimates = estimates,
-                        modelcall = model$call))
-      }
       ## more standard lm, glm, etc. objects
       if (is.null(factorname)) stop("argument \"factorname\" is NULL")
       term.index <- which(attr(terms(model),"term.labels") ==
@@ -48,6 +32,18 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
                     modelcall = model$call)
             )}
   else {  ##  the basic QV calculation, on a covariance matrix
+      if (inherits(object, "BTabilities")) {  ## catch this special case
+          vc <- vcov(object)
+          cf <- coef(object)
+          if (is.null(factorname)) factorname <- attr(object, "factorname")
+          if (is.null(modelcall)) modelcall <- attr(object, "modelcall")
+          return(qvcalc(vc,
+                        factorname = factorname,
+                        labels = labels,
+                        dispersion = dispersion,
+                        estimates = cf,
+                        modelcall = modelcall))
+      }
       covmat <- object
       if (!is.null(labels)) rownames(covmat) <- colnames(covmat) <- labels
       n <- dim(covmat)[1]
