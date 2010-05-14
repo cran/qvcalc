@@ -14,14 +14,16 @@ and improve the accuracy of \dQuote{floating absolute risk}
 (Easton et al., 1991). 
 }
 \usage{
-qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
+qvcalc(object, factorname=NULL,  coef.indices = NULL,
+      labels = NULL, dispersion = NULL,
       estimates=NULL,  modelcall=NULL)
 }
 \arguments{
 \item{object}{A model (of class lm, glm, etc.), or the covariance (sub)matrix
-  for the estimates of interest}
-\item{factorname}{If \code{object} is a model, the name of the factor of
-  interest}
+  for the estimates of interest, or an object of class \code{Btabilities}}
+\item{factorname}{Either \code{NULL}, or a character vector of length 1}
+\item{coef.indices}{Either \code{NULL}, or a numeric vector of length at
+  least 3}  
 \item{labels}{An optional vector of row names for the \code{qvframe}
   component of the result (redundant if \code{object} is a model)}
 \item{dispersion}{an optional scalar multiplier for the covariance
@@ -32,8 +34,19 @@ qvcalc(object, factorname=NULL, labels = NULL, dispersion = NULL,
   (redundant if \code{object} is a model)}
 }
 \details{
-  Ordinarily the quasi variances are positive and so their square roots
-  (the quasi standard errors) exist and can be used in plots, etc.
+If \code{object} is a model, then at least one of \code{factorname} or
+\code{coef.indices} must be non-\code{NULL}.  The value of
+\code{coef.indices}, if non-\code{NULL}, determines which rows
+and columns of the model's variance-covariance matrix to use.  If
+\code{coef.indices} contains a zero, an extra row and column are
+included at the indicated position, to represent the zero variances and
+covariances associated with a reference level.  If \code{coef.indices}
+is \code{NULL}, then \code{factorname} should be the name of a factor
+effect in the model, and is used in order to extract the necessary
+variance-covariance estinmates.
+
+Ordinarily the quasi variances are positive and so their square roots
+(the quasi standard errors) exist and can be used in plots, etc.
 
 Occasionally one (and only one) of the quasi variances is negative, and
 so the corresponding quasi standard error does not exist (it appears as
@@ -62,6 +75,7 @@ A list of class \code{qv}, with components
 \item{relerrs}{relative errors for approximating the standard errors of all 
   simple contrasts}
 \item{factorname}{the factor name if given}
+\item{coef.indices}{the coefficient indices if given}
 \item{modelcall}{if \code{object} is a model, \code{object$call};
   otherwise \code{NULL}}
 }
@@ -105,9 +119,19 @@ shipmodel <- glm(formula = incidents ~ type + year + period,
 shiptype.qvs <- qvcalc(shipmodel, "type")
 summary(shiptype.qvs, digits=4)
 plot(shiptype.qvs)
+
+##  Quasi-variance summary for "ability" estimates in a Bradley-Terry model
+##  Requires the "BradleyTerry2" package
 \dontrun{
+library(BradleyTerry2)
+example(baseball)
+plot(baseball.qv <- qvcalc(BTabilities(baseballModel2)))
+}
+
+
 ##  Example of a negative quasi variance
 ##  Requires the "car" package
+\dontrun{
 library(car)
 data(Prestige)
 attach(Prestige)

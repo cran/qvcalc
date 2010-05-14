@@ -1,38 +1,71 @@
-qvcalc <- function(object, factorname = NULL, labels = NULL,
-                   dispersion = NULL,
+qvcalc <- function(object, factorname = NULL, coef.indices = NULL,
+                   labels = NULL, dispersion = NULL,
                    estimates = NULL, modelcall = NULL)
 {
+  coef.indices.saved <- coef.indices
   if (!is.matrix(object)) {
       model <- object
       ## special case of an unstructured Bradley-Terry model
       ## more standard lm, glm, etc. objects
-      if (is.null(factorname)) stop("argument \"factorname\" is NULL")
-      term.index <- which(attr(terms(model),"term.labels") ==
-                                                         factorname)
-      modelmat <- if (is.matrix(model$x)) model$x
-                  else model.matrix(terms(model), data = model$model)
-      coef.indices <- which(attr(modelmat,"assign") == term.index)
-      if (length(model$xlevels[[factorname]]) == length(coef.indices)){
+      if (is.null(factorname) && is.null(coef.indices)) {
+          stop("arguments \"factorname\" and \"coef.indices\" are both NULL")
+      }
+      if (is.null(coef.indices)) {   ## try to use factorname
+          term.index <- which(attr(terms(model),"term.labels") ==
+                              factorname)
+          modelmat <- if (is.matrix(model$x)) model$x
+          else model.matrix(terms(model), data = model$model)
+          coef.indices <- which(attr(modelmat,"assign") == term.index)
+          if (length(model$xlevels[[factorname]]) == length(coef.indices)){
       ## factor has no constraint applied, eg if no intercept in model
-          contmat <- diag(length(coef.indices))}
+              contmat <- diag(length(coef.indices))}
+          else {
+              contmat <- eval(call(model$contrasts[[factorname]],
+                                   model$xlevels[[factorname]]))}
+          rownames(contmat) <- model$xlevels[[factorname]]
+          if (is.null(estimates))
+              estimates <- contmat %*% coef(model)[coef.indices]
+          covmat <- vcov(model, dispersion = dispersion)
+          covmat <- covmat[coef.indices, coef.indices, drop = FALSE]
+          covmat <- contmat %*% covmat %*% t(contmat)
+      }
       else {
-          contmat <- eval(call(model$contrasts[[factorname]],
-                           model$xlevels[[factorname]]))}
-      rownames(contmat) <- model$xlevels[[factorname]]
-      if (is.null(estimates))
-          estimates <- contmat %*% coef(model)[coef.indices]
-      covmat <- vcov(model, dispersion = dispersion)
-      covmat <- covmat[coef.indices, coef.indices, drop = FALSE]
-      covmat <- contmat %*% covmat %*% t(contmat)
+          k <- length(coef.indices)
+          refPos <- numeric(0)
+          if (0 %in% coef.indices) { ## there's a reference level to include
+              refPos <- which(coef.indices == 0)
+              coef.indices <- coef.indices[-refPos]
+          }
+          covmat <- vcov(model, dispersion = dispersion)
+          covmat <- covmat[coef.indices, coef.indices, drop = FALSE]
+          if (is.null(estimates)) estimates <- coef(model)[coef.indices]
+          if (length(refPos) == 1) {
+              if (length(estimates) != k) estimates <- c(0, estimates)
+              covmat <- cbind(0, rbind(0, covmat))
+              names(estimates)[1] <- rownames(covmat)[1] <-
+                  colnames(covmat)[1] <- "(reference)"
+              if (refPos != 1) {
+                  if (refPos == k){
+                      perm <- c(2:k, 1)
+                  } else {
+                      perm <- c(2:refPos, 1, (refPos + 1):k)
+                  }
+                  estimates <- estimates[perm]
+                  covmat <- covmat[perm, perm, drop = FALSE]
+              }
+          }
+      }
       return(qvcalc(covmat,
                     factorname = factorname,
+                    coef.indices = coef.indices.saved,
                     labels = labels,
                     dispersion = dispersion,
                     estimates = estimates,
                     modelcall = model$call)
-            )}
+             )
+      }
   else {  ##  the basic QV calculation, on a covariance matrix
-      if (inherits(object, "BTabilities")) {  ## catch this special case
+      if (inherits(object, "BTabilities")) {  ## catch this special case first
           vc <- vcov(object)
           cf <- coef(object)
           if (is.null(factorname)) factorname <- attr(object, "factorname")
@@ -126,10 +159,11 @@ qvcalc <- function(object, factorname = NULL, labels = NULL,
                             qvframe = frame,
  	      	            dispersion = dispersion,
                             relerrs = relerrs,
-                            modelcall = modelcall,
-                            factorname = factorname),
+                            factorname = factorname,
+                            coef.indices = coef.indices,
+                            modelcall = modelcall),
  	            class="qv"))}
-}
+  }
 
 worstErrors <- function(qv.object)
 {
