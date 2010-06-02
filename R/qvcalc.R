@@ -13,8 +13,11 @@ qvcalc <- function(object, factorname = NULL, coef.indices = NULL,
       if (is.null(coef.indices)) {   ## try to use factorname
           term.index <- which(attr(terms(model),"term.labels") ==
                               factorname)
+      ##  Next line is to cope with mismatch between model.matrix(model)
+      ##  and model.matrix(terms(model)), for coxph objects:
+          tmodel <- if (inherits(model, "coxph")) model else terms(model)
           modelmat <- if (is.matrix(model$x)) model$x
-          else model.matrix(terms(model), data = model$model)
+          else model.matrix(tmodel, data = model$model)
           coef.indices <- which(attr(modelmat,"assign") == term.index)
           if (length(model$xlevels[[factorname]]) == length(coef.indices)){
       ## factor has no constraint applied, eg if no intercept in model
