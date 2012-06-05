@@ -11,21 +11,17 @@ qvcalc <- function(object, factorname = NULL, coef.indices = NULL,
           stop("arguments \"factorname\" and \"coef.indices\" are both NULL")
       }
       if (is.null(coef.indices)) {   ## try to use factorname
-          term.index <- which(attr(terms(model),"term.labels") ==
-                              factorname)
-      ##  Next line is to cope with mismatch between model.matrix(model)
-      ##  and model.matrix(terms(model)), for coxph objects:
-          tmodel <- if (inherits(model, "coxph")) model else terms(model)
-          modelmat <- if (is.matrix(model$x)) model$x
-          else model.matrix(tmodel, data = model$model)
-          coef.indices <- which(attr(modelmat,"assign") == term.index)
+          term.index <- which(attr(terms(model),"term.labels") == factorname)
+          modelmat <- model.matrix(model)
+          has.coef <- colnames(modelmat) %in% names(coef(model))
+          coef.indices <- which(attr(modelmat,"assign")[has.coef] == term.index)
           if (length(model$xlevels[[factorname]]) == length(coef.indices)){
       ## factor has no constraint applied, eg if no intercept in model
               contmat <- diag(length(coef.indices))}
           else {
               contmat <- eval(call(model$contrasts[[factorname]],
                                    model$xlevels[[factorname]]))}
-          rownames(contmat) <- model$xlevels[[factorname]]
+#          rownames(contmat) <- model$xlevels[[factorname]]  ## not needed?
           if (is.null(estimates))
               estimates <- contmat %*% coef(model)[coef.indices]
           covmat <- vcov(model, dispersion = dispersion)
