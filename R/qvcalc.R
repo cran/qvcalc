@@ -152,7 +152,13 @@ qvcalc <- function(object, factorname = NULL, coef.indices = NULL,
                           quasiVar = qv,
                           row.names = names(qv))
       if (!is.null(estimates)) frame$estimate <- estimates
-      relerrs <-  1 - sqrt(exp(residuals(model)))
+      relerrs <-  sqrt(exp(- residuals(model))) - 1
+      ##  The above formula was corrected in v0.8-9; it
+      ##  previously said 1 - sqrt(exp(residuals(model)), which is
+      ##  not what should be expected for "relative error" here.
+      ##  This corrected version agrees with the Biometrika paper.
+      ##  Thanks to Shaun Killingbeck for spotting this error in the
+      ##  previous version.
       names(relerrs) <- names(response)
       return(structure(list(covmat = covmat,
                             qvframe = frame,

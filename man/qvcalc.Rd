@@ -8,15 +8,15 @@
   quasi standard errors)
 for estimated model coefficients relating to the levels of a categorical
 (i.e., factor) explanatory variable.  For details of the method see
-Firth (2000), Firth (2003) or Firth and Menezes (2004).  Quasi variances 
+Firth (2000), Firth (2003) or Firth and de Menezes (2004).  Quasi variances 
 generalize
 and improve the accuracy of \dQuote{floating absolute risk} 
 (Easton et al., 1991). 
 }
 \usage{
-qvcalc(object, factorname=NULL,  coef.indices = NULL,
+qvcalc(object, factorname = NULL,  coef.indices = NULL,
       labels = NULL, dispersion = NULL,
-      estimates=NULL,  modelcall=NULL)
+      estimates = NULL,  modelcall = NULL)
 }
 \arguments{
 \item{object}{A model (of class lm, glm, etc.), or the covariance (sub)matrix
@@ -93,7 +93,7 @@ Firth, D. (2003) Overcoming the reference category problem in the
 presentation of statistical models. \emph{Sociological Methodology} 
 \bold{33}, 1--18.
 
-Firth, D. and Mezezes, R. X. de (2004)  Quasi-variances.  
+Firth, D. and de Mezezes, R. X. (2004)  Quasi-variances.  
   \emph{Biometrika} \bold{91}, 65--80.  
 
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
@@ -117,7 +117,7 @@ shipmodel <- glm(formula = incidents ~ type + year + period,
     family = quasipoisson, 
     data = ships, subset = (service > 0), offset = log(service))
 shiptype.qvs <- qvcalc(shipmodel, "type")
-summary(shiptype.qvs, digits=4)
+summary(shiptype.qvs, digits = 4)
 plot(shiptype.qvs)
 
 ##  Quasi-variance summary for "ability" estimates in a Bradley-Terry model
@@ -125,9 +125,10 @@ plot(shiptype.qvs)
 \dontrun{
 library(BradleyTerry2)
 example(baseball)
-plot(baseball.qv <- qvcalc(BTabilities(baseballModel2)))
+baseball.qv <- qvcalc(BTabilities(baseballModel2))
+print(baseball.qv)
+plot(baseball.qv, levelNames = c("Bal", "Bos", "Cle", "Det", "Mil", "NY", "Tor"))
 }
-
 
 ##  Example of a negative quasi variance
 ##  Requires the "car" package
@@ -139,7 +140,7 @@ mymodel <- lm(prestige ~ type + education)
 library(qvcalc)
 type.qvs <- qvcalc(mymodel, "type")
 ##  Warning message: 
-##  NaNs produced in: sqrt(qv) 
+##  In sqrt(qv) : NaNs produced
 summary(type.qvs)
 ##  Model call:  lm(formula = prestige ~ type + education) 
 ##  Factor name:  type 

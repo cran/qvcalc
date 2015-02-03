@@ -1,15 +1,14 @@
 Package: qvcalc
-Version: 0.8-8
-Date: 2012-06-05
-Title: Quasi variances for factor effects in statistical models
+Version: 0.8-9
+Date: 2015-02-03
+Title: Quasi Variances for Factor Effects in Statistical Models
 Author: David Firth
 Maintainer: David Firth <d.firth@warwick.ac.uk>
-URL: http://www.warwick.ac.uk/go/qvcalc,
-        http://www.warwick.ac.uk/go/dfirth
-Description: Functions to compute quasi variances and associated
-        measures of approximation error
+URL: http://warwick.ac.uk/qvcalc
+Description: Functions to compute quasi variances and associated measures of approximation error
 Suggests: relimp, MASS
-License: GPL (>= 2)
-Packaged: 2012-06-05 10:15:35 UTC; david
+License: GPL-2 | GPL-3
+Packaged: 2015-02-03 20:26:53 UTC; david
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2012-06-05 11:08:32
+Date/Publication: 2015-02-03 23:21:51

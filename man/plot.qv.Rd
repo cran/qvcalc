@@ -6,7 +6,10 @@
   quasi standard errors.
 }
 \usage{
-\method{plot}{qv}(x, intervalWidth = 2, ylab = "estimate", xlab = x$factorname, ylim = NULL, main = "Intervals based on quasi standard errors", levelNames = NULL, ...)
+\method{plot}{qv}(x, intervalWidth = 2, ylab = "estimate",
+    xlab = x$factorname, ylim = NULL,
+    main = "Intervals based on quasi standard errors",
+    levelNames = NULL, ...)
 }
 \arguments{
   \item{x}{ an object of class \code{"qv"}, typically the result of

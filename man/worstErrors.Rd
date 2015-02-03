@@ -42,7 +42,7 @@ shipmodel <- glm(formula = incidents ~ type + year + period,
     family = quasipoisson, 
     data = ships, subset = (service > 0), offset = log(service))
 shiptype.qvs <- qvcalc(shipmodel, "type")
-summary(shiptype.qvs, digits=4)
+summary(shiptype.qvs, digits = 4)
 worstErrors(shiptype.qvs)
 }
 
