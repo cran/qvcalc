@@ -1,3 +1,7 @@
+importFrom("graphics", "plot", "points", "segments")
+importFrom("stats", "coef", "glm", "model.matrix", "residuals",
+             "terms", "vcov")
+
 export(qvcalc, worstErrors, indentPrint)
 
 S3method(print, qv)
