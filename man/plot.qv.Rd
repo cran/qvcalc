@@ -7,7 +7,7 @@
 }
 \usage{
 \method{plot}{qv}(x, intervalWidth = 2, ylab = "estimate",
-    xlab = x$factorname, ylim = NULL,
+    xlab = "", ylim = NULL,
     main = "Intervals based on quasi standard errors",
     levelNames = NULL, ...)
 }
