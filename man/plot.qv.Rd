@@ -68,9 +68,14 @@ ships$period <- as.factor(ships$period)
 shipmodel <- glm(formula = incidents ~ type + year + period,
     family = quasipoisson, 
     data = ships, subset = (service > 0), offset = log(service))
-shiptype.qvs <- qvcalc(shipmodel, "type")
-summary(shiptype.qvs, digits=4)
-plot(shiptype.qvs)
+qvs <- qvcalc(shipmodel, "type")
+summary(qvs, digits = 4)
+plot(qvs, col = c(rep("red", 4), "blue"))
+## if we want to plot in decreasing order (of estimates):
+est <- qvs$qvframe$estimate
+qvs2 <- qvs
+qvs2$qvframe <- qvs$qvframe[order(est, decreasing = TRUE), , drop = FALSE]
+plot(qvs2)
 }
 \keyword{ models }
 \keyword{ hplot }

@@ -175,7 +175,7 @@ plot.qv <- function(x,
          xlab = xlab, ylab = ylab,
          main = main, ...)
     points(frame$estimate, ...)
-    segments(xvalues, tails, xvalues, tops)
+    segments(xvalues, tails, xvalues, tops, ...)
     invisible(x)
 }
 
