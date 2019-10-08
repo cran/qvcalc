@@ -3,6 +3,7 @@
 \alias{qvcalc.default}
 \alias{qvcalc.lm}
 \alias{qvcalc.itempar}
+\alias{qvcalc.coxph}
 \alias{summary.qv}
 \alias{print.qv}
 \title{Quasi Variances for Model Coefficients}
@@ -27,6 +28,8 @@ qvcalc(object, ...)
 \method{qvcalc}{lm}(object, factorname = NULL, coef.indices = NULL,
        dispersion = NULL, ...)
 
+\method{qvcalc}{coxph}(object, factorname = NULL, coef.indices = NULL, ...)
+
 \method{qvcalc}{itempar}(object, ...)
 }
 \arguments{
@@ -35,7 +38,9 @@ qvcalc(object, ...)
   constrained to zero).  For the generic \code{qvcalc}, the
   \code{object} can be any object for which the relevant S3 method has
   been defined.  These currently include many types of regression model
-  (via \code{qvcalc.lm}) and objects of class
+  (via \code{qvcalc.lm}), including objects of class
+  \code{\link[survival]{coxph}}; 
+  and also objects of class
   \code{\link[psychotools]{itempar}}.}
 \item{factorname}{Either \code{NULL}, or a character vector of length 1}
 \item{coef.indices}{Either \code{NULL}, or a numeric vector of length at
@@ -161,11 +166,23 @@ if (require(MASS)) {
                      data = ships,
                      subset = (service > 0),
                      offset = log(service))
-    shiptype.qvs <- qvcalc(shipmodel, "type")
-    summary(shiptype.qvs, digits = 4)
-    plot(shiptype.qvs, xlab = "ship type")
-## An equivalent result by using the coef.indices argument instead:
-    shiptype.qv2 <- qvcalc(shipmodel, coef.indices = c(0, 2:5))
+    shiptype.qv <- qvcalc(shipmodel, "type")
+
+    ## We can plot "comparison intervals" as follows:
+    ##   plot(shiptype.qv, xlab = "ship type")
+
+    ## An equivalent result by using the coef.indices argument instead:
+    ##   shiptype.qv2 <- qvcalc(shipmodel, coef.indices = c(0, 2:5))
+
+    summary(shiptype.qv, digits = 4)
+}
+
+## Example of a "coxph" model
+if(require(survival)) {
+    data("veteran", package = "survival")
+    cancer_model <- coxph(Surv(time,status) ~ celltype, data = veteran)
+    celltype_qv <- qvcalc(cancer_model, "celltype")
+    summary(celltype_qv)
 }
 
 ## Based on an example from ?itempar
