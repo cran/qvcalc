@@ -129,14 +129,14 @@ and case-control analysis avoiding an arbitrary reference group.
 
 Firth, D. (2000)  Quasi-variances in Xlisp-Stat and on the web.  
   \emph{Journal of Statistical Software} \bold{5.4}, 1--13.  
-  At \url{http://www.jstatsoft.org}
+  \doi{10.18637/jss.v005.i04}
 
 Firth, D. (2003) Overcoming the reference category problem in the 
 presentation of statistical models. \emph{Sociological Methodology} 
-\bold{33}, 1--18.
+\bold{33}, 1--18. \doi{10.1111/j.0081-1750.2003.t01-1-00125.x}
 
 Firth, D. and de Mezezes, R. X. (2004)  Quasi-variances.  
-  \emph{Biometrika} \bold{91}, 65--80.  
+  \emph{Biometrika} \bold{91}, 65--80. \doi{10.1093/biomet/91.1.65} 
 
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
   London: Chapman and Hall.

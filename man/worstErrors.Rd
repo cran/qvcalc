@@ -19,7 +19,7 @@ worstErrors(qv.object)
 }
 \references{
 Firth, D. and Mezezes, R. X. de (2004)  Quasi-variances.  
-  \emph{Biometrika} \bold{91}, 69--80.  
+  \emph{Biometrika} \bold{91}, 69--80. \doi{10.1093/biomet/91.1.65} 
   
 McCullagh, P. and Nelder, J. A. (1989) \emph{Generalized Linear Models}.
   London: Chapman and Hall.
