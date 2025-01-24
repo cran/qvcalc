@@ -1,7 +1,6 @@
-# qvcalc 1.0.3.1 (development)
+# qvcalc 1.0.4
 
-* (To do) Add more options to `plot.qv()`
-* (To do) Add an aesthetic for `ggplot`, as alternative to `plot.qv()`
+* Minor updates to documentation, and added some tests (thanks to John Muschelli for this).  Added ORCID details in the DESCRIPTION file.
 
 # qvcalc 1.0.3
 

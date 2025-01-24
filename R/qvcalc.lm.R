@@ -1,3 +1,7 @@
+#' @export
+#'
+#' @rdname qvcalc
+#' 
 qvcalc.lm <- function(object, factorname = NULL, coef.indices = NULL,
                       dispersion = NULL, ...)
 {
